@@ -24,7 +24,7 @@ public class User {
     @Column(length = 1000)
     private String profilePicture;
 
-    private static User of(String id, AuthType authType, String name, String profilePicture) {
+    public static User of(String id, AuthType authType, String name, String profilePicture) {
         return new User(id, authType, name, profilePicture);
     }
 

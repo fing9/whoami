@@ -2,6 +2,7 @@ package com.dahhong.whoami.auth.application.service;
 
 import com.dahhong.whoami.auth.application.port.in.LoginKakaoUseCase;
 import com.dahhong.whoami.auth.application.service.dto.GetTokenResponseDto;
+import com.dahhong.whoami.user.application.port.in.JoinKakaoUserUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -20,6 +21,8 @@ import java.net.URI;
 @Service
 @RequiredArgsConstructor
 public class LoginKakaoService implements LoginKakaoUseCase {
+
+    private final JoinKakaoUserUseCase joinKakaoUserUseCase;
 
     private final String ROOT_URI = "https://kauth.kakao.com";
 
