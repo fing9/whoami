@@ -1,5 +1,6 @@
 package com.dahhong.whoami.auth.adapter.in;
 
+import com.dahhong.whoami.auth.adapter.in.dto.KakaoCallbackResponseDto;
 import com.dahhong.whoami.auth.application.port.in.LoginKakaoUseCase;
 import com.dahhong.whoami.auth.application.port.in.LogoutKakaoUseCase;
 import com.dahhong.whoami.auth.application.port.in.QuitKakaoUseCase;
@@ -36,9 +37,12 @@ public class KakaoOauthController {
     }
 
     @GetMapping("/callback")
-    public ResponseEntity<ApiResponse<String>> callbackByKakao(@Param("code") String code) {
+    public ResponseEntity<ApiResponse<KakaoCallbackResponseDto>> callbackByKakao(@Param("code") String code) {
         String accessToken = loginKakaoUseCase.loginKakao(code);
-        return ResponseEntity.ok(ApiResponse.success(accessToken));
+        KakaoCallbackResponseDto responseDto = KakaoCallbackResponseDto.builder()
+                .accessToken(accessToken)
+                .build();
+        return ResponseEntity.ok(ApiResponse.success(responseDto));
     }
 
     @DeleteMapping("/logout")
