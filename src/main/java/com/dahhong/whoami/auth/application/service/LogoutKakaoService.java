@@ -1,14 +1,12 @@
 package com.dahhong.whoami.auth.application.service;
 
 import com.dahhong.whoami.auth.application.port.in.LogoutKakaoUseCase;
-import com.dahhong.whoami.auth.application.service.dto.IdTokenPayloadResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
