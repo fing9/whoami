@@ -6,6 +6,6 @@ public interface LoginKakaoUseCase {
 
     URI getKakaoOauthURI();
 
-    void loginKakao(String code);
+    String loginKakao(String code);
 
 }

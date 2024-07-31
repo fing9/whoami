@@ -87,14 +87,14 @@ public class LoginKakaoService implements LoginKakaoUseCase {
 
     @Override
     @Transactional
-    public void loginKakao(String code) {
+    public String loginKakao(String code) {
         GetTokenResponseDto response = publishTokenByCode(code);
         String userId = idTokenService.getUserId(response.getId_token());
         UserInfoResponseDto userInfo = getKaKaoUserInfoService.getUserInfo(response.getAccess_token());
         joinKakaoUserUseCase.joinKakaoUser(userId,
                 userInfo.getKakao_account().getProfile().getNickname(),
                 userInfo.getKakao_account().getProfile().getProfile_image_url());
-        logoutKakaoUseCase.logoutKakao(response.getAccess_token());
+        return response.getAccess_token();
     }
 
 }
