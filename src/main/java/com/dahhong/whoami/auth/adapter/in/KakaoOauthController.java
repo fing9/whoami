@@ -38,10 +38,7 @@ public class KakaoOauthController {
 
     @GetMapping("/callback")
     public ResponseEntity<ApiResponse<KakaoCallbackResponseDto>> callbackByKakao(@Param("code") String code) {
-        String accessToken = loginKakaoUseCase.loginKakao(code);
-        KakaoCallbackResponseDto responseDto = KakaoCallbackResponseDto.builder()
-                .accessToken(accessToken)
-                .build();
+        KakaoCallbackResponseDto responseDto = loginKakaoUseCase.loginKakao(code);
         return ResponseEntity.ok(ApiResponse.success(responseDto));
     }
 
