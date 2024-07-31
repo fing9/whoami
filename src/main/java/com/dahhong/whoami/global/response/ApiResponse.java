@@ -1,7 +1,7 @@
 package com.dahhong.whoami.global.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.dahhong.whoami.global.response.enums.ResultCode;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.data.domain.Page;

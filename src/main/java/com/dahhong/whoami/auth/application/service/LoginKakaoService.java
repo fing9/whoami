@@ -2,10 +2,11 @@ package com.dahhong.whoami.auth.application.service;
 
 import com.dahhong.whoami.auth.application.port.in.LoginKakaoUseCase;
 import com.dahhong.whoami.auth.application.service.dto.GetTokenResponseDto;
+import com.dahhong.whoami.auth.application.service.dto.UserInfoResponseDto;
 import com.dahhong.whoami.user.application.port.in.JoinKakaoUserUseCase;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,12 @@ import java.net.URI;
 @RequiredArgsConstructor
 public class LoginKakaoService implements LoginKakaoUseCase {
 
+    private final RestTemplate restTemplate;
+
+    private final IdTokenService idTokenService;
+
+    private final GetKaKaoUserInfoService getKaKaoUserInfoService;
+
     private final JoinKakaoUserUseCase joinKakaoUserUseCase;
 
     private final String ROOT_URI = "https://kauth.kakao.com";
@@ -36,14 +43,7 @@ public class LoginKakaoService implements LoginKakaoUseCase {
     @Value("${kakao.redirect.uri}")
     private String redirectURI;
 
-    private RestTemplate kakaoRestTemplate() {
-        RestTemplateBuilder builder = new RestTemplateBuilder();
-        return builder
-                .rootUri(ROOT_URI)
-                .build();
-    }
-
-    private String publishTokenByCode(String code) {
+    private GetTokenResponseDto publishTokenByCode(String code) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
@@ -62,10 +62,8 @@ public class LoginKakaoService implements LoginKakaoUseCase {
                 .toUri();
 
         try {
-            RestTemplate restTemplate = kakaoRestTemplate();
             ResponseEntity<GetTokenResponseDto> response = restTemplate.postForEntity(uri, request, GetTokenResponseDto.class);
-            System.out.println("response: " + response);
-            return response.getBody().toString();
+            return response.getBody();
         } catch (RestClientException e) {
             System.out.println(e.getMessage());
             throw new RestClientException("카카오 서버에서 토큰을 받아오는 것에 실패했습니다.");
@@ -85,8 +83,14 @@ public class LoginKakaoService implements LoginKakaoUseCase {
     }
 
     @Override
+    @Transactional
     public void loginKakao(String code) {
-        System.out.println(publishTokenByCode(code));
+        GetTokenResponseDto response = publishTokenByCode(code);
+        String userId = idTokenService.getUserId(response.getId_token());
+        UserInfoResponseDto userInfo = getKaKaoUserInfoService.getUserInfo(response.getAccess_token());
+        joinKakaoUserUseCase.joinKakaoUser(userId,
+                userInfo.getKakao_account().getProfile().getNickname(),
+                userInfo.getKakao_account().getProfile().getProfile_image_url());
     }
 
 }
