@@ -15,14 +15,17 @@ public class User {
     @Id
     private String id;
 
+    @Enumerated(EnumType.STRING)
+    private AuthType authType;
+
     @Column(length = 100)
     private String name;
 
     @Column(length = 1000)
     private String profilePicture;
 
-    private static User of(String id, String name, String profilePicture) {
-        return new User(id, name, profilePicture);
+    private static User of(String id, AuthType authType, String name, String profilePicture) {
+        return new User(id, authType, name, profilePicture);
     }
 
 }
