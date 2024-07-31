@@ -13,8 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @Column(length = 100)
     private String name;
@@ -22,8 +21,8 @@ public class User {
     @Column(length = 1000)
     private String profilePicture;
 
-    private static User of(String name, String profilePicture) {
-        return new User(null, name, profilePicture);
+    private static User of(String id, String name, String profilePicture) {
+        return new User(id, name, profilePicture);
     }
 
 }
