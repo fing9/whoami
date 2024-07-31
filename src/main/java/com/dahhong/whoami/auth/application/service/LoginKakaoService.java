@@ -1,6 +1,7 @@
 package com.dahhong.whoami.auth.application.service;
 
 import com.dahhong.whoami.auth.application.port.in.LoginKakaoUseCase;
+import com.dahhong.whoami.auth.application.port.in.LogoutKakaoUseCase;
 import com.dahhong.whoami.auth.application.service.dto.GetTokenResponseDto;
 import com.dahhong.whoami.auth.application.service.dto.UserInfoResponseDto;
 import com.dahhong.whoami.user.application.port.in.JoinKakaoUserUseCase;
@@ -28,6 +29,8 @@ public class LoginKakaoService implements LoginKakaoUseCase {
     private final IdTokenService idTokenService;
 
     private final GetKaKaoUserInfoService getKaKaoUserInfoService;
+
+    private final LogoutKakaoUseCase logoutKakaoUseCase;
 
     private final JoinKakaoUserUseCase joinKakaoUserUseCase;
 
@@ -91,6 +94,7 @@ public class LoginKakaoService implements LoginKakaoUseCase {
         joinKakaoUserUseCase.joinKakaoUser(userId,
                 userInfo.getKakao_account().getProfile().getNickname(),
                 userInfo.getKakao_account().getProfile().getProfile_image_url());
+        logoutKakaoUseCase.logoutKakao(response.getAccess_token());
     }
 
 }

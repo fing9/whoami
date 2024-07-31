@@ -25,7 +25,6 @@ public class KakaoOauthController {
         return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
     }
 
-
     @GetMapping("/callback")
     public ResponseEntity<ApiResponse<Void>> callbackByKakao(@Param("code") String code) {
         System.out.println("code = " + code);
