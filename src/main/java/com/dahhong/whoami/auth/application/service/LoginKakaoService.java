@@ -1,5 +1,6 @@
 package com.dahhong.whoami.auth.application.service;
 
+import com.dahhong.whoami.auth.adapter.in.dto.KakaoCallbackResponseDto;
 import com.dahhong.whoami.auth.application.port.in.LoginKakaoUseCase;
 import com.dahhong.whoami.auth.application.port.in.LogoutKakaoUseCase;
 import com.dahhong.whoami.auth.application.service.dto.GetTokenResponseDto;
@@ -87,14 +88,17 @@ public class LoginKakaoService implements LoginKakaoUseCase {
 
     @Override
     @Transactional
-    public String loginKakao(String code) {
+    public KakaoCallbackResponseDto loginKakao(String code) {
         GetTokenResponseDto response = publishTokenByCode(code);
         String userId = idTokenService.getUserId(response.getId_token());
         UserInfoResponseDto userInfo = getKaKaoUserInfoService.getUserInfo(response.getAccess_token());
         joinKakaoUserUseCase.joinKakaoUser(userId,
                 userInfo.getKakao_account().getProfile().getNickname(),
                 userInfo.getKakao_account().getProfile().getProfile_image_url());
-        return response.getAccess_token();
+        return KakaoCallbackResponseDto.builder()
+                .accessToken(response.getAccess_token())
+                .refreshToken(response.getRefresh_token())
+                .build();
     }
 
 }

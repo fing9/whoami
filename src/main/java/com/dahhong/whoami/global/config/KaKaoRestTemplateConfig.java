@@ -1,4 +1,4 @@
-package com.dahhong.whoami.auth.application.service;
+package com.dahhong.whoami.global.config;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;

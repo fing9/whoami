@@ -16,6 +16,9 @@ public class User {
     private String id;
 
     @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @Enumerated(EnumType.STRING)
     private AuthType authType;
 
     @Column(length = 100)
@@ -24,8 +27,8 @@ public class User {
     @Column(length = 1000)
     private String profilePicture;
 
-    public static User of(String id, AuthType authType, String name, String profilePicture) {
-        return new User(id, authType, name, profilePicture);
+    public static User of(String id, Role role, AuthType authType, String name, String profilePicture) {
+        return new User(id, role, authType, name, profilePicture);
     }
 
 }

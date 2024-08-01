@@ -13,4 +13,6 @@ public class KakaoCallbackResponseDto {
 
     private String accessToken;
 
+    private String refreshToken;
+
 }
