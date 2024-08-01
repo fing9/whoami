@@ -1,6 +1,7 @@
 package com.dahhong.whoami.auth.adapter.in;
 
 import com.dahhong.whoami.auth.adapter.in.dto.KakaoCallbackResponseDto;
+import com.dahhong.whoami.auth.adapter.in.swagger.KakaoOauthControllerSwagger;
 import com.dahhong.whoami.auth.application.port.in.KakaoTokenRefreshUseCase;
 import com.dahhong.whoami.auth.application.port.in.LoginKakaoUseCase;
 import com.dahhong.whoami.auth.application.port.in.LogoutKakaoUseCase;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/auth/kakao")
-public class KakaoOauthController {
+public class KakaoOauthController implements KakaoOauthControllerSwagger {
 
     private final LoginKakaoUseCase loginKakaoUseCase;
 
