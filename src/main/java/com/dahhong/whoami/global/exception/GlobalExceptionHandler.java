@@ -6,6 +6,7 @@ import com.dahhong.whoami.global.response.enums.ResultCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -48,4 +49,13 @@ public class GlobalExceptionHandler {
             e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(value = UsernameNotFoundException.class)
+    public ResponseEntity<ApiResponse<Object>> usernameNotFoundExceptionHandler(Exception e) {
+        final ApiResponse<Object> response = ApiResponse.failure(ResultCode.FORBIDDEN,
+                e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+    }
+
+
 }
