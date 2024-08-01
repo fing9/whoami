@@ -44,13 +44,15 @@ public class KakaoOauthController {
     }
 
     @DeleteMapping("/logout")
-    public ResponseEntity<ApiResponse<String>> logout(@Param("accessToken") String accessToken) {
+    public ResponseEntity<ApiResponse<String>> logout(@RequestHeader("Authorization") String accessToken) {
+        accessToken = accessToken.replace("Bearer ", "");
         logoutKakaoUseCase.logoutKakao(accessToken);
         return ResponseEntity.ok(ApiResponse.success());
     }
 
     @DeleteMapping("/quit")
-    public ResponseEntity<ApiResponse<Void>> quit(@Param("accessToken") String accessToken) {
+    public ResponseEntity<ApiResponse<Void>> quit(@RequestHeader("Authorization") String accessToken) {
+        accessToken = accessToken.replace("Bearer ", "");
         String userId = quitKakaoUseCase.quitKakao(accessToken).getId();
         quitUserUseCase.quitUser(userId);
         return ResponseEntity.ok(ApiResponse.success());
