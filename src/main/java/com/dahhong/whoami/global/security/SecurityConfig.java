@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/swagger", "/swagger-ui.html", "/swagger-ui/**", "/api-docs", "/api-docs/**", "/v3/api-docs/**").permitAll()
-                        .requestMatchers("/", "/error", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.svg", "/**/*.jpg", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
+                        .requestMatchers("/", "/error", "/favicon.ico").permitAll()
                         .requestMatchers("/api/v1/auth/kakao/login").permitAll()
                         .requestMatchers("/api/v1/auth/kakao/callback").permitAll()
                         .requestMatchers("/api/v1/auth/kakao/refresh").permitAll()
