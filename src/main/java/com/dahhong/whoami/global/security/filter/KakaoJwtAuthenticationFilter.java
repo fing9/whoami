@@ -1,5 +1,6 @@
 package com.dahhong.whoami.global.security.filter;
 
+import com.dahhong.whoami.global.exception.customException.AuthorizationFailureException;
 import com.dahhong.whoami.global.security.authenticationProvider.KakaoAuthenticationProvider;
 import com.dahhong.whoami.global.security.filter.dto.AccessTokenVerificationResponseDto;
 import com.dahhong.whoami.user.application.port.out.UserQueryPort;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
@@ -56,8 +58,7 @@ public class KakaoJwtAuthenticationFilter extends GenericFilterBean {
             ResponseEntity<AccessTokenVerificationResponseDto> response = restTemplate.exchange(uri, HttpMethod.GET, request, AccessTokenVerificationResponseDto.class);
             return response.getBody().getId().toString();
         } catch (RestClientException | NullPointerException e) {
-            System.out.println(e.getMessage());
-            throw new RestClientException("카카오 서버에서 유저 토큰을 인증하는 것에 실패했습니다.");
+            throw new AuthorizationFailureException("카카오 서버에서 유저 토큰을 인증하는 것에 실패했습니다.", e.getCause());
         }
     }
 
