@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/page")
@@ -36,10 +38,8 @@ public class PageController implements PageControllerSwagger {
 
 	@GetMapping("/all")
 	public ResponseEntity<?> getAllPages() {
-		/**
-		 * TODO : 로직
-		 */
-		return ResponseEntity.ok(ApiResponse.success(/* TODO: data! */));
+		List<Page> allPages = getPageUseCase.getAllPages();
+		return ResponseEntity.ok(ApiResponse.success(allPages));
 	}
 
 	@PostMapping("/create")
