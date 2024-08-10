@@ -1,7 +1,7 @@
 package com.dahhong.whoami.page.adapter.in;
 
 import com.dahhong.whoami.global.response.ApiResponse;
-import com.dahhong.whoami.page.adapter.in.dto.CreatePageRequestDto;
+import com.dahhong.whoami.page.adapter.in.dto.PageRequestDto;
 import com.dahhong.whoami.page.adapter.in.dto.CreatePageResponseDto;
 import com.dahhong.whoami.page.adapter.in.swagger.PageControllerSwagger;
 import com.dahhong.whoami.page.application.port.in.CreatePageUseCase;
@@ -9,7 +9,6 @@ import com.dahhong.whoami.page.application.port.in.DeletePageUseCase;
 import com.dahhong.whoami.page.application.port.in.GetPageUseCase;
 import com.dahhong.whoami.page.application.port.in.UpdatePageUseCase;
 import com.dahhong.whoami.page.application.service.DeletePageService;
-import com.dahhong.whoami.page.application.service.UpdatePageService;
 import com.dahhong.whoami.page.domain.entity.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -44,14 +43,14 @@ public class PageController implements PageControllerSwagger {
 	}
 
 	@PostMapping("/create")
-	public ResponseEntity<?> createPage(@RequestBody CreatePageRequestDto createPageRequest) {
-		Page createdPage = createPageUseCase.createPage(createPageRequest.getUserId(), createPageRequest.getTitle());
+	public ResponseEntity<?> createPage(@RequestBody PageRequestDto pageRequest) {
+		Page createdPage = createPageUseCase.createPage(pageRequest.getUserId(), pageRequest.getTitle());
 		return ResponseEntity.ok(ApiResponse.success(new CreatePageResponseDto("성공적으로 페이지를 생성했습니다", createdPage.getId())));
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> updatePage(@PathVariable Long id, @RequestBody Page pageDetails) {
-		updatePageUseCase.updatePage(pageDetails);
+	public ResponseEntity<?> updatePage(@PathVariable Long id, @RequestBody PageRequestDto pageRequest) {
+		updatePageUseCase.updatePage(Page.of(pageRequest.getUserId(), pageRequest.getTitle()));
 		return ResponseEntity.ok(ApiResponse.success());
 	}
 
