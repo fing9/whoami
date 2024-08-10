@@ -1,6 +1,7 @@
 package com.dahhong.whoami.page.adapter.in;
 
 import com.dahhong.whoami.global.response.ApiResponse;
+import com.dahhong.whoami.page.adapter.in.dto.CreatePageRequest;
 import com.dahhong.whoami.page.domain.entity.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class PageController {
 	}
 
 	@PostMapping("/create")
-	public ResponseEntity<?> createPage(@RequestBody Page page) {
+	public ResponseEntity<?> createPage(@RequestBody CreatePageRequest createPageRequest) {
 		/**
 		 * TODO: 로직
 		 */
