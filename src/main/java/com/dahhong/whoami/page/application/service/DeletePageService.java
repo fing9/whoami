@@ -5,6 +5,7 @@ import com.dahhong.whoami.page.application.port.in.GetPageUseCase;
 import com.dahhong.whoami.page.application.port.out.PageCommandPort;
 import com.dahhong.whoami.page.domain.entity.Page;
 import com.dahhong.whoami.user.application.port.in.GetUserUseCase;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ public class DeletePageService implements DeletePageUseCase {
 	private final GetPageUseCase getPageUseCase;
 
 	@Override
+	@Transactional
 	public void deletePage(Long id) {
 		Page page = getPageUseCase.getPage(id);
 		pageCommandPort.delete(page);
