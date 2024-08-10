@@ -8,6 +8,7 @@ import lombok.*;
 @Table(name="wai_page")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
 public class Page {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,4 +19,8 @@ public class Page {
 
 	@Column
 	private String title;
+
+	public static Page of(String userId, String title) {
+		return new Page().builder().userId(userId).title(title).build();
+	}
 }
