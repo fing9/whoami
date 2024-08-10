@@ -15,8 +15,8 @@ public class CreatePageService implements CreatePageUseCase {
 
 	@Override
 	@Transactional
-	public void createPage(String userId, String title) {
+	public Page createPage(String userId, String title) {
 		Page page = Page.of(userId, title);
-		pageCommandPort.save(page);
+		return pageCommandPort.save(page);
 	}
 }
