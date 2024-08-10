@@ -35,4 +35,19 @@ public class PageController {
 		return ResponseEntity.ok(ApiResponse.success(/* data? */));
 	}
 
+	@PutMapping("/{id}")
+	public ResponseEntity<?> updatePage(@PathVariable Long id, @RequestBody Page pageDetails) {
+		/**
+		 * TODO : 로직
+		 */
+		return ResponseEntity.ok(ApiResponse.success());
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deletePage(@PathVariable Long id) {
+		/**
+		 * TODO : 로직
+		 */
+		return ResponseEntity.ok(ApiResponse.success());
+	}
 }
