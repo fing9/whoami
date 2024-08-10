@@ -1,5 +1,6 @@
 package com.dahhong.whoami.page.application.service;
 
+import com.dahhong.whoami.page.adapter.in.dto.PageRequestDto;
 import com.dahhong.whoami.page.application.port.in.GetPageUseCase;
 import com.dahhong.whoami.page.application.port.in.UpdatePageUseCase;
 import com.dahhong.whoami.page.application.port.out.PageCommandPort;
@@ -16,7 +17,7 @@ public class UpdatePageService implements UpdatePageUseCase {
 
 	@Override
 	@Transactional
-	public void updatePage(Page page) {
-		pageCommandPort.save(page);
+	public void updatePage(Long id, PageRequestDto pageDetails) {
+		pageCommandPort.save(Page.of(id, pageDetails.getUserId(), pageDetails.getTitle()));
 	}
 }

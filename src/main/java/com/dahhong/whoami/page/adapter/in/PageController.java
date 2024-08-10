@@ -50,7 +50,7 @@ public class PageController implements PageControllerSwagger {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updatePage(@PathVariable Long id, @RequestBody PageRequestDto pageRequest) {
-		updatePageUseCase.updatePage(Page.of(pageRequest.getUserId(), pageRequest.getTitle()));
+		updatePageUseCase.updatePage(id, pageRequest);
 		return ResponseEntity.ok(ApiResponse.success());
 	}
 

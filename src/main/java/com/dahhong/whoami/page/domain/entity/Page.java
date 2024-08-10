@@ -21,6 +21,9 @@ public class Page extends BaseTimeEntity {
 	@Column
 	private String title;
 
+	public static Page of(Long id, String userId, String title) {
+		return new Page(id, userId, title);
+	}
 	public static Page of(String userId, String title) {
 		return new Page().builder().userId(userId).title(title).build();
 	}
