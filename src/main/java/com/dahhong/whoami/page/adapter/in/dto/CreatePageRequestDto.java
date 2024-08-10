@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class CreatePageRequest {
+public class CreatePageRequestDto {
 
 	@NotBlank(message = "User Id Is Required")
 	String userId;
