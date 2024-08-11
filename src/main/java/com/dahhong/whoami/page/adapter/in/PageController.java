@@ -28,7 +28,6 @@ public class PageController implements PageControllerSwagger {
 	private final UpdatePageUseCase updatePageUseCase;
 
 	private final GetPageUseCase getPageUseCase;
-	private final DeletePageService deletePageService;
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getPage(@PathVariable Long id) {
@@ -56,7 +55,7 @@ public class PageController implements PageControllerSwagger {
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deletePage(@PathVariable Long id) {
-		deletePageService.deletePage(id);
+		deletePageUseCase.deletePage(id);
 		return ResponseEntity.ok(ApiResponse.success());
 	}
 }
