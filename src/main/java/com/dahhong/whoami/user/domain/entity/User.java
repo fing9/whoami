@@ -21,7 +21,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private AuthType authType;
 
-    @Column(length = 100)
+    @Column(length = 100, columnDefinition = "VARCHAR(100) CHARACTER SET UTF8")
     private String name;
 
     @Column(length = 1000)
