@@ -62,7 +62,7 @@ public class PageController implements PageControllerSwagger {
 		if (getPageUseCase.checkPageOwnership(id, userId)) {
 			throw new AuthorizationFailureException("인증 정보가 일치하지 않습니다.", null);
 		}
-		updatePageUseCase.updatePage(id, pageRequest);
+		updatePageUseCase.updatePage(id, userId, pageRequest);
 		return ResponseEntity.ok(ApiResponse.success());
 	}
 

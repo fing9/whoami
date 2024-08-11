@@ -4,5 +4,5 @@ import com.dahhong.whoami.page.adapter.in.dto.PageRequestDto;
 import com.dahhong.whoami.page.domain.entity.Page;
 
 public interface UpdatePageUseCase {
-	void updatePage(Long id, PageRequestDto pageDetails);
+	void updatePage(Long id, String userId, PageRequestDto pageDetails);
 }

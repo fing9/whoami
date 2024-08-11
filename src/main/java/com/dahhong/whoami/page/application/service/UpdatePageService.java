@@ -17,7 +17,7 @@ public class UpdatePageService implements UpdatePageUseCase {
 
 	@Override
 	@Transactional
-	public void updatePage(Long id, PageRequestDto pageDetails) {
-		pageCommandPort.save(Page.of(id, pageDetails.getUserId(), pageDetails.getTitle()));
+	public void updatePage(Long id, String userId, PageRequestDto pageDetails) {
+		pageCommandPort.save(Page.of(id, userId, pageDetails.getTitle()));
 	}
 }
