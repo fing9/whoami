@@ -59,7 +59,7 @@ public class PageController implements PageControllerSwagger {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updatePage(@PathVariable Long id, @Valid @RequestBody PageRequestDto pageRequest, @AuthenticationPrincipal String userId) {
-		if (getPageUseCase.checkPageOwnership(id, userId)) {
+		if (!getPageUseCase.checkPageOwnership(id, userId)) {
 			throw new AuthorizationFailureException("인증 정보가 일치하지 않습니다.", null);
 		}
 		updatePageUseCase.updatePage(id, userId, pageRequest);
@@ -68,7 +68,7 @@ public class PageController implements PageControllerSwagger {
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deletePage(@PathVariable Long id, @AuthenticationPrincipal String userId) {
-		if (getPageUseCase.checkPageOwnership(id, userId)) {
+		if (!getPageUseCase.checkPageOwnership(id, userId)) {
 			throw new AuthorizationFailureException("인증 정보가 일치하지 않습니다.", null);
 		}
 		deletePageUseCase.deletePage(id);
