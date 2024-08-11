@@ -24,4 +24,9 @@ public class GetPageService implements GetPageUseCase {
 	public List<Page> getAllPages() {
 		return pageQueryPort.findAll();
 	}
+
+	@Override
+	public boolean checkPageOwnership(Long id, String userId) {
+		return this.getPage(id).getUserId().equals(userId);
+	}
 }
