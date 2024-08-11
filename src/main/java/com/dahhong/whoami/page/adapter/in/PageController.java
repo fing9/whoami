@@ -1,6 +1,5 @@
 package com.dahhong.whoami.page.adapter.in;
 
-import com.dahhong.whoami.auth.domain.entity.UserDetailsImpl;
 import com.dahhong.whoami.global.exception.customException.AuthorizationFailureException;
 import com.dahhong.whoami.global.response.ApiResponse;
 import com.dahhong.whoami.page.adapter.in.dto.PageRequestDto;
@@ -10,15 +9,11 @@ import com.dahhong.whoami.page.application.port.in.CreatePageUseCase;
 import com.dahhong.whoami.page.application.port.in.DeletePageUseCase;
 import com.dahhong.whoami.page.application.port.in.GetPageUseCase;
 import com.dahhong.whoami.page.application.port.in.UpdatePageUseCase;
-import com.dahhong.whoami.page.application.service.DeletePageService;
 import com.dahhong.whoami.page.domain.entity.Page;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -59,7 +54,7 @@ public class PageController implements PageControllerSwagger {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updatePage(@PathVariable Long id, @Valid @RequestBody PageRequestDto pageRequest, @AuthenticationPrincipal String userId) {
-		if (!getPageUseCase.checkPageOwnership(id, userId)) {
+		if (!getPageUseCase.isOwnerOfPage(id, userId)) {
 			throw new AuthorizationFailureException("인증 정보가 일치하지 않습니다.", null);
 		}
 		updatePageUseCase.updatePage(id, userId, pageRequest);
@@ -68,7 +63,7 @@ public class PageController implements PageControllerSwagger {
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deletePage(@PathVariable Long id, @AuthenticationPrincipal String userId) {
-		if (!getPageUseCase.checkPageOwnership(id, userId)) {
+		if (!getPageUseCase.isOwnerOfPage(id, userId)) {
 			throw new AuthorizationFailureException("인증 정보가 일치하지 않습니다.", null);
 		}
 		deletePageUseCase.deletePage(id);

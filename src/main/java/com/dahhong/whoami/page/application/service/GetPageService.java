@@ -26,7 +26,7 @@ public class GetPageService implements GetPageUseCase {
 	}
 
 	@Override
-	public boolean checkPageOwnership(Long id, String userId) {
+	public boolean isOwnerOfPage(Long id, String userId) {
 		return this.getPage(id).getUserId().equals(userId);
 	}
 }

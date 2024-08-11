@@ -9,5 +9,5 @@ public interface GetPageUseCase {
 
 	List<Page> getAllPages();
 
-	boolean checkPageOwnership(Long id, String userId);
+	boolean isOwnerOfPage(Long id, String userId);
 }
