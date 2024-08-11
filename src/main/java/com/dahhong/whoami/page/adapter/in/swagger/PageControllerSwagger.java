@@ -7,6 +7,9 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Tag(name = "페이지", description = "페이지 관련 CRUD API")
 public interface PageControllerSwagger {
@@ -22,17 +25,17 @@ public interface PageControllerSwagger {
 
 	@Operation(summary = "페이지 생성", description = "새로운 페이지를 생성합니다.")
 	@Parameters()
-	ResponseEntity<?> createPage(PageRequestDto pageRequest);
+	ResponseEntity<?> createPage(PageRequestDto pageRequest, @AuthenticationPrincipal String userId);
 
 	@Operation(summary = "페이지 수정", description = "특정 ID에 해당하는 페이지를 수정합니다.")
 	@Parameters({
 			@Parameter(name = "id", description = "수정할 페이지의 ID", required = true),
 	})
-	ResponseEntity<?> updatePage(Long id, PageRequestDto pageRequest);
+	ResponseEntity<?> updatePage(Long id, PageRequestDto pageRequest, @AuthenticationPrincipal String userId);
 
 	@Operation(summary = "페이지 삭제", description = "특정 ID에 해당하는 페이지를 삭제합니다.")
 	@Parameters({
 			@Parameter(name = "id", description = "삭제할 페이지의 ID", required = true)
 	})
-	ResponseEntity<?> deletePage(Long id);
+	ResponseEntity<?> deletePage(Long id , @AuthenticationPrincipal String userId);
 }

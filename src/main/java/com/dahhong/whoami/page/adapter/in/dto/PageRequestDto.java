@@ -9,10 +9,6 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 public class PageRequestDto {
-
-	@NotBlank(message = "User Id Is Required")
-	String userId;
-
 	@NotBlank(message = "Title Is Required")
 	String title;
 }
