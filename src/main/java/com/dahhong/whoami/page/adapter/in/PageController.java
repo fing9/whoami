@@ -2,6 +2,7 @@ package com.dahhong.whoami.page.adapter.in;
 
 import com.dahhong.whoami.global.exception.customException.AuthorizationFailureException;
 import com.dahhong.whoami.global.response.ApiResponse;
+import com.dahhong.whoami.page.adapter.in.dto.GetPageResponseDto;
 import com.dahhong.whoami.page.adapter.in.dto.PageRequestDto;
 import com.dahhong.whoami.page.adapter.in.dto.CreatePageResponseDto;
 import com.dahhong.whoami.page.adapter.in.swagger.PageControllerSwagger;
@@ -33,13 +34,13 @@ public class PageController implements PageControllerSwagger {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getPage(@PathVariable Long id) {
-		Page page = getPageUseCase.getPage(id);
+		GetPageResponseDto page = GetPageResponseDto.of(getPageUseCase.getPage(id));
 		return ResponseEntity.ok(ApiResponse.success(page));
 	}
 
 	@GetMapping("/all")
 	public ResponseEntity<?> getAllPages() {
-		List<Page> allPages = getPageUseCase.getAllPages();
+		List<GetPageResponseDto> allPages = getPageUseCase.getAllPages().stream().map((page)-> GetPageResponseDto.of(page)).toList();
 		return ResponseEntity.ok(ApiResponse.success(allPages));
 	}
 
