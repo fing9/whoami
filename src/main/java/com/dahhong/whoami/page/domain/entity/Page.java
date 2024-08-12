@@ -1,6 +1,7 @@
 package com.dahhong.whoami.page.domain.entity;
 
 import com.dahhong.whoami.global.auditing.BaseTimeEntity;
+import com.dahhong.whoami.user.domain.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,16 +16,14 @@ public class Page extends BaseTimeEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column
-	private String userId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private User user;
 
 	@Column(length = 100)
 	private String title;
 
-	public static Page of(Long id, String userId, String title) {
-		return new Page(id, userId, title);
-	}
-	public static Page of(String userId, String title) {
-		return new Page().builder().userId(userId).title(title).build();
+	public static Page of(Long id, User user, String title) {
+		return new Page(id, user, title);
 	}
 }
