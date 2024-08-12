@@ -74,7 +74,7 @@ public class PageController implements PageControllerSwagger {
 
 	@GetMapping("/all/{userId}")
 	public ResponseEntity<?> getPageOfUser(@PathVariable String userId) {
-		/* 검증하지 않고, 없는 유저여도 빈 배열이 나오는 것을 의도로? */
+		/* 유저 검증 => GetUserUseCase.getUser(userId)에서 orElseThrow로 NotFoundException 나오게 되어있음 */
 		List<GetPageResponseDto> pagesOfUser = getPageUseCase.getPagesOfUser(userId).stream().map((page)-> GetPageResponseDto.of(page)).toList();
 		return ResponseEntity.ok(ApiResponse.success(pagesOfUser));
 	}
