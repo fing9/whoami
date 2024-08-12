@@ -18,7 +18,7 @@ public class Page extends BaseTimeEntity {
 	@Column
 	private String userId;
 
-	@Column
+	@Column(length = 100)
 	private String title;
 
 	public static Page of(Long id, String userId, String title) {
