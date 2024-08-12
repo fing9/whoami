@@ -38,4 +38,10 @@ public interface PageControllerSwagger {
 			@Parameter(name = "id", description = "삭제할 페이지의 ID", required = true)
 	})
 	ResponseEntity<?> deletePage(Long id , @AuthenticationPrincipal String userId);
+
+	@Operation(summary = "특정 사용자의 모든 페이지 조회", description = "특정 사용자의 모든 페이지를 조회합니다.")
+	@Parameters({
+			@Parameter(name = "userId", description = "조회할 사용자의 ID", required = true)
+	})
+	ResponseEntity<?> getPageOfUser(String userId);
 }

@@ -11,6 +11,7 @@ import com.dahhong.whoami.page.application.port.in.DeletePageUseCase;
 import com.dahhong.whoami.page.application.port.in.GetPageUseCase;
 import com.dahhong.whoami.page.application.port.in.UpdatePageUseCase;
 import com.dahhong.whoami.page.domain.entity.Page;
+import com.dahhong.whoami.user.application.port.in.GetUserUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -69,5 +70,12 @@ public class PageController implements PageControllerSwagger {
 		}
 		deletePageUseCase.deletePage(id);
 		return ResponseEntity.ok(ApiResponse.success());
+	}
+
+	@GetMapping("/all/{userId}")
+	public ResponseEntity<?> getPageOfUser(@PathVariable String userId) {
+		/* 검증하지 않고, 없는 유저여도 빈 배열이 나오는 것을 의도로? */
+		List<GetPageResponseDto> pagesOfUser = getPageUseCase.getPagesOfUser(userId).stream().map((page)-> GetPageResponseDto.of(page)).toList();
+		return ResponseEntity.ok(ApiResponse.success(pagesOfUser));
 	}
 }
