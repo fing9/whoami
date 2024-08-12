@@ -19,10 +19,13 @@ public class UpdatePageService implements UpdatePageUseCase {
 
 	private final GetUserUseCase getUserUseCase;
 
+	private final GetPageUseCase getPageUseCase;
+
 	@Override
 	@Transactional
 	public void updatePage(Long id, String userId, PageRequestDto pageDetails) {
 		User user = getUserUseCase.getUser(userId);
-		pageCommandPort.save(Page.of(id, user, pageDetails.getTitle()));
+		Page page = getPageUseCase.getPage(id); //없으면 orElseThrow됨 내부에서
+		pageCommandPort.save(Page.of(page.getId(), user, pageDetails.getTitle()));
 	}
 }
