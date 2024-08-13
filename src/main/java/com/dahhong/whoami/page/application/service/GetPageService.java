@@ -25,12 +25,12 @@ public class GetPageService implements GetPageUseCase {
 
 	@Override
 	public List<Page> getAllPages() {
-		return pageQueryPort.findAll();
+		return pageQueryPort.findAllJoinFetch();
 	}
 
 	@Override
 	public List<Page> getPagesOfUser(String userId) {
-		return getUserUseCase.getUser(userId).getPages();
+		return pageQueryPort.findByUserIdJoinFetch(userId);
 	}
 
 	@Override

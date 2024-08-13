@@ -10,4 +10,8 @@ public interface PageQueryPort {
 	Optional<Page> findById(Long pageId);
 
 	List<Page> findAll();
+
+	List<Page> findAllJoinFetch();
+
+	List<Page> findByUserIdJoinFetch(String userId);
 }

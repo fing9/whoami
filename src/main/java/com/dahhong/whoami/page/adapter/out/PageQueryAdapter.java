@@ -24,4 +24,14 @@ public class PageQueryAdapter implements PageQueryPort {
 	public List<Page> findAll() {
 		return pageRepository.findAll();
 	}
+
+	@Override
+	public List<Page> findAllJoinFetch() {
+		return pageRepository.findAllJoinFetch();
+	}
+
+	@Override
+	public List<Page> findByUserIdJoinFetch(String userId) {
+		return pageRepository.findByUserIdJoinFetch(userId);
+	}
 }
