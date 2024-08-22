@@ -23,7 +23,7 @@ public class KakaoTokenRefreshService implements KakaoTokenRefreshUseCase {
 
     private final RestTemplate restTemplate;
 
-    private final String ROOT_URI = "https://kapi.kakao.com";
+    private final String ROOT_URI = "https://kauth.kakao.com";
 
     private final String ACCESS_TOKEN_REFRESH_URL = "/oauth/token";
 
