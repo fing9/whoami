@@ -19,7 +19,7 @@ public interface UserControllerSwagger {
 	ResponseEntity<?> getUser(@AuthenticationPrincipal String userId);
 
 	@Operation(summary = "모든 유저 정보 조회(ADMIN)", description = "모든 유저의 정보를 조회합니다. 이 API는 관리자만 접근할 수 있습니다.")
-	ResponseEntity<?> getAllUsers(@AuthenticationPrincipal String userId);
+	ResponseEntity<?> getAllUsers();
 
 	@Operation(summary = "특정 유저 정보 조회(본인 정보가 아닌 경우 ADMIN이어야 함)", description = "특정 유저의 정보를 조회합니다. 관리자는 다른 유저의 정보를 조회할 수 있습니다.")
 	@Parameters({

@@ -22,15 +22,13 @@ public class UserController implements UserControllerSwagger {
 
 	@GetMapping("/info")
 	public ResponseEntity<?> getUser(@AuthenticationPrincipal String userId) {
+		//SecurityConfig에서 권한이 필터됨
 		User user = getUserUseCase.getUser(userId);
 		return ResponseEntity.ok(ApiResponse.success(UserInfoDto.of(user)));
 	}
 
 	@GetMapping("/info/all")
-	public ResponseEntity<?> getAllUsers(@AuthenticationPrincipal String userId) {
-		if (getUserUseCase.getUser(userId).getRole() != Role.ADMIN) {
-			throw new AuthorizationFailureException("다른 유저 정보에 접근할 수 있는 권한이 없습니다.", null);
-		}
+	public ResponseEntity<?> getAllUsers() {
 		List<UserInfoDto> users = getUserUseCase.getAllUsers().stream().map((user) -> UserInfoDto.of(user)).toList();
 		return ResponseEntity.ok(ApiResponse.success(users));
 	}
