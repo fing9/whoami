@@ -3,6 +3,7 @@ package com.dahhong.whoami.user.adapter.in;
 import com.dahhong.whoami.global.exception.customException.AuthorizationFailureException;
 import com.dahhong.whoami.global.response.ApiResponse;
 import com.dahhong.whoami.user.adapter.in.dto.UserInfoDto;
+import com.dahhong.whoami.user.adapter.in.swagger.UserControllerSwagger;
 import com.dahhong.whoami.user.application.port.in.GetUserUseCase;
 import com.dahhong.whoami.user.domain.entity.Role;
 import com.dahhong.whoami.user.domain.entity.User;
@@ -16,7 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/user")
-public class UserController {
+public class UserController implements UserControllerSwagger {
 	private final GetUserUseCase getUserUseCase;
 
 	@GetMapping("/info")
