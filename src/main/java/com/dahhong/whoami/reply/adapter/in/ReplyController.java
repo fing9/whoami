@@ -1,6 +1,7 @@
 package com.dahhong.whoami.reply.adapter.in;
 
 import com.dahhong.whoami.global.response.ApiResponse;
+import com.dahhong.whoami.reply.adapter.in.dto.CreateReplyResponseDto;
 import com.dahhong.whoami.reply.adapter.in.dto.GetReplyResponseDto;
 import com.dahhong.whoami.reply.adapter.in.dto.ReplyRequestDto;
 import com.dahhong.whoami.reply.application.port.in.CreateReplyUseCase;
@@ -27,7 +28,7 @@ public class ReplyController {
 	@PostMapping("/{pageId}")
 	public ResponseEntity<?> createReply(@PathVariable Long pageId, @Valid @RequestBody ReplyRequestDto replyRequest) {
 		Reply createdReply = createReplyUseCase.createReply(pageId, replyRequest.getReplyUsername(), replyRequest.getContent());
-		return ResponseEntity.ok(ApiResponse.success(createdReply)); //CreateReplyResponseDto 굳이 필요할까요? 안 넣겠습니다.
+		return ResponseEntity.ok(ApiResponse.success(new CreateReplyResponseDto("성공적으로 답변을 생성하였습니다.", createdReply.getId())));
 	}
 
 	@GetMapping("/{pageId}")
