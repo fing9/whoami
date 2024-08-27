@@ -2,6 +2,10 @@ package com.dahhong.whoami.reply.application.port.in;
 
 import com.dahhong.whoami.reply.domain.entity.Reply;
 
+import java.util.List;
+
 public interface GetReplyUseCase {
-	Reply getReplyOfPage(Long pageId);
+	List<Reply> getAllReplies();
+
+	List<Reply> getRepliesOfPage(Long pageId);
 }
