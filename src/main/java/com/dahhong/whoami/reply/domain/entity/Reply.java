@@ -25,4 +25,8 @@ public class Reply extends BaseTimeEntity {
 
 	@Column(length = 500)
 	private String content;
+
+	public static Reply of(Long id, String replyUsername, Page page, String content) {
+		return new Reply(id, replyUsername, page, content);
+	}
 }
