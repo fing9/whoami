@@ -13,5 +13,5 @@ public interface ReplyRepository extends JpaRepository<Reply, Long> {
 	List<Reply> findAllJoinFetch();
 
 	@Query("select r from Reply r join fetch r.page p where p.id = :pageId")
-	List<Reply> findByPageId(Long pageId);
+	List<Reply> findByPageIdFetchJoin(Long pageId);
 }
