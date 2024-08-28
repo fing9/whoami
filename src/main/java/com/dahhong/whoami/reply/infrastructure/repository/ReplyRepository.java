@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ReplyRepository extends JpaRepository<Reply, Long> {
 
-	@Query("select r from Reply r join fetch r.page ")
+	@Query("select r from Reply r join fetch r.page p")
 	List<Reply> findAllJoinFetch();
 
 	@Query("select r from Reply r join fetch r.page p where p.id = :pageId")
