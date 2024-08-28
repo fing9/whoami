@@ -4,10 +4,9 @@ import com.dahhong.whoami.global.response.ApiResponse;
 import com.dahhong.whoami.reply.adapter.in.dto.CreateReplyResponseDto;
 import com.dahhong.whoami.reply.adapter.in.dto.GetReplyResponseDto;
 import com.dahhong.whoami.reply.adapter.in.dto.ReplyRequestDto;
+import com.dahhong.whoami.reply.adapter.in.swagger.ReplyControllerSwagger;
 import com.dahhong.whoami.reply.application.port.in.CreateReplyUseCase;
-import com.dahhong.whoami.reply.application.port.in.DeleteReplyUseCase;
 import com.dahhong.whoami.reply.application.port.in.GetReplyUseCase;
-import com.dahhong.whoami.reply.application.port.in.UpdateReplyUseCase;
 import com.dahhong.whoami.reply.domain.entity.Reply;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/reply")
-public class ReplyController {
+public class ReplyController implements ReplyControllerSwagger {
 
 	private final CreateReplyUseCase createReplyUseCase;
 
@@ -38,7 +37,7 @@ public class ReplyController {
 	}
 
 	@GetMapping("/all")
-	public ResponseEntity<?> getAllReplys() {
+	public ResponseEntity<?> getAllReplies() {
 		List<GetReplyResponseDto> allReplies = getReplyUseCase.getAllReplies().stream().map((reply)-> GetReplyResponseDto.of(reply)).toList();
 		return ResponseEntity.ok(ApiResponse.success(allReplies));
 	}
