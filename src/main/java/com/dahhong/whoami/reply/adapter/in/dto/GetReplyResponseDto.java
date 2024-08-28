@@ -13,6 +13,7 @@ public class GetReplyResponseDto {
 	private Long id;
 	private String username;
 	private String content;
+	private Long pageId;
 	private LocalDateTime createdDate;
 	private LocalDateTime modifiedDate;
 
@@ -21,6 +22,18 @@ public class GetReplyResponseDto {
 				reply.getId(),
 				reply.getReplyUsername(),
 				reply.getContent(),
+				reply.getPage().getId(),
+				reply.getCreatedDate(),
+				reply.getModifiedDate()
+		);
+	}
+
+	public static GetReplyResponseDto of(Reply reply, Long pageId) {
+		return new GetReplyResponseDto(
+				reply.getId(),
+				reply.getReplyUsername(),
+				reply.getContent(),
+				pageId,
 				reply.getCreatedDate(),
 				reply.getModifiedDate()
 		);

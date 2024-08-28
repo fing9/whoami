@@ -32,7 +32,7 @@ public class ReplyController implements ReplyControllerSwagger {
 
 	@GetMapping("/{pageId}")
 	public ResponseEntity<?> getReplyOfPage(@PathVariable Long pageId) {
-		List<GetReplyResponseDto> replies = getReplyUseCase.getRepliesOfPage(pageId).stream().map((reply)-> GetReplyResponseDto.of(reply)).toList();
+		List<GetReplyResponseDto> replies = getReplyUseCase.getRepliesOfPage(pageId).stream().map((reply)-> GetReplyResponseDto.of(reply, pageId)).toList();
 		return ResponseEntity.ok(ApiResponse.success(replies));
 	}
 
