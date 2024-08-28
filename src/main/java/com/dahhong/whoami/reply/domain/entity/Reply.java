@@ -19,7 +19,7 @@ public class Reply extends BaseTimeEntity {
 	@Column(nullable = false, length = 100)
 	private String replyUsername;
 
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "page_id")
 	private Page page;
 
