@@ -9,6 +9,7 @@ import com.dahhong.whoami.reply.application.port.in.CreateReplyUseCase;
 import com.dahhong.whoami.reply.application.port.in.GetReplyUseCase;
 import com.dahhong.whoami.reply.domain.entity.Reply;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,13 +26,13 @@ public class ReplyController implements ReplyControllerSwagger {
 	private final GetReplyUseCase getReplyUseCase;
 
 	@PostMapping("/{pageId}")
-	public ResponseEntity<?> createReply(@PathVariable Long pageId, @Valid @RequestBody ReplyRequestDto replyRequest) {
+	public ResponseEntity<?> createReply(@Positive @PathVariable Long pageId, @Valid @RequestBody ReplyRequestDto replyRequest) {
 		Reply createdReply = createReplyUseCase.createReply(pageId, replyRequest.getReplyUsername(), replyRequest.getContent());
 		return ResponseEntity.ok(ApiResponse.success(new CreateReplyResponseDto("성공적으로 답변을 생성하였습니다.", createdReply.getId())));
 	}
 
 	@GetMapping("/{pageId}")
-	public ResponseEntity<?> getReplyOfPage(@PathVariable Long pageId) {
+	public ResponseEntity<?> getReplyOfPage(@Positive @PathVariable Long pageId) {
 		List<GetReplyResponseDto> replies = getReplyUseCase.getRepliesOfPage(pageId).stream().map((reply)-> GetReplyResponseDto.of(reply, pageId)).toList();
 		return ResponseEntity.ok(ApiResponse.success(replies));
 	}
