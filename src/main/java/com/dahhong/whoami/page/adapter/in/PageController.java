@@ -90,16 +90,14 @@ public class PageController implements PageControllerSwagger {
 		return ResponseEntity.ok(ApiResponse.success(pagesOfUser));
 	}
 
-	@Override
 	@PostMapping("/replies/{pageId}")
-	public ResponseEntity<?> createReplyToPage(@Positive @PathVariable Long pageId, @Valid @RequestBody ReplyRequestDto replyRequest) {
+	public ResponseEntity<?> createReplyToPage(@PathVariable Long pageId, @Valid @RequestBody ReplyRequestDto replyRequest) {
 		Reply createdReply = createReplyUseCase.createReply(pageId, replyRequest.getReplyUsername(), replyRequest.getContent());
 		return ResponseEntity.ok(ApiResponse.success(new CreateReplyResponseDto("성공적으로 답변을 생성하였습니다.", createdReply.getId())));
 	}
 
-	@Override
 	@GetMapping("/replies/{pageId}")
-	public ResponseEntity<?> getRepliesOfPage(@Positive @PathVariable Long pageId) {
+	public ResponseEntity<?> getRepliesOfPage(@PathVariable Long pageId) {
 		List<GetReplyResponseDto> replies = getReplyUseCase.getRepliesOfPage(pageId).stream().map((reply)-> GetReplyResponseDto.of(reply, pageId)).toList();
 		return ResponseEntity.ok(ApiResponse.success(replies));
 	}
