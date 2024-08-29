@@ -11,8 +11,15 @@ import com.dahhong.whoami.page.application.port.in.DeletePageUseCase;
 import com.dahhong.whoami.page.application.port.in.GetPageUseCase;
 import com.dahhong.whoami.page.application.port.in.UpdatePageUseCase;
 import com.dahhong.whoami.page.domain.entity.Page;
+import com.dahhong.whoami.reply.adapter.in.dto.CreateReplyResponseDto;
+import com.dahhong.whoami.reply.adapter.in.dto.GetReplyResponseDto;
+import com.dahhong.whoami.reply.adapter.in.dto.ReplyRequestDto;
+import com.dahhong.whoami.reply.application.port.in.CreateReplyUseCase;
+import com.dahhong.whoami.reply.application.port.in.GetReplyUseCase;
+import com.dahhong.whoami.reply.domain.entity.Reply;
 import com.dahhong.whoami.user.application.port.in.GetUserUseCase;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -32,6 +39,10 @@ public class PageController implements PageControllerSwagger {
 	private final UpdatePageUseCase updatePageUseCase;
 
 	private final GetPageUseCase getPageUseCase;
+
+	private final GetReplyUseCase getReplyUseCase;
+
+	private final CreateReplyUseCase createReplyUseCase;
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getPage(@PathVariable Long id) {
@@ -77,5 +88,19 @@ public class PageController implements PageControllerSwagger {
 		/* 유저 검증 => GetUserUseCase.getUser(userId)에서 orElseThrow로 NotFoundException 나오게 되어있음 */
 		List<GetPageResponseDto> pagesOfUser = getPageUseCase.getPagesOfUser(userId).stream().map((page)-> GetPageResponseDto.of(page)).toList();
 		return ResponseEntity.ok(ApiResponse.success(pagesOfUser));
+	}
+
+	@Override
+	@PostMapping("/replies/{pageId}")
+	public ResponseEntity<?> createReplyToPage(@Positive @PathVariable Long pageId, @Valid @RequestBody ReplyRequestDto replyRequest) {
+		Reply createdReply = createReplyUseCase.createReply(pageId, replyRequest.getReplyUsername(), replyRequest.getContent());
+		return ResponseEntity.ok(ApiResponse.success(new CreateReplyResponseDto("성공적으로 답변을 생성하였습니다.", createdReply.getId())));
+	}
+
+	@Override
+	@GetMapping("/replies/{pageId}")
+	public ResponseEntity<?> getRepliesOfPage(@Positive @PathVariable Long pageId) {
+		List<GetReplyResponseDto> replies = getReplyUseCase.getRepliesOfPage(pageId).stream().map((reply)-> GetReplyResponseDto.of(reply, pageId)).toList();
+		return ResponseEntity.ok(ApiResponse.success(replies));
 	}
 }

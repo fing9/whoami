@@ -15,4 +15,9 @@ public class ReplyCommandAdapter implements ReplyCommandPort {
 	public Reply save(Reply reply) {
 		return replyRepository.save(reply);
 	}
+
+	@Override
+	public void delete(Reply reply) {
+		replyRepository.delete(reply);
+	}
 }

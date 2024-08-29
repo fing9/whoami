@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -22,5 +23,10 @@ public class ReplyQueryAdapter implements ReplyQueryPort {
 	@Override
 	public List<Reply> findByPageIdFetchJoin(Long pageId) {
 		return replyRepository.findByPageIdFetchJoin(pageId);
+	}
+
+	@Override
+	public Optional<Reply> findById(Long id) {
+		return replyRepository.findById(id);
 	}
 }

@@ -1,7 +1,7 @@
 package com.dahhong.whoami.reply.application.port.in;
 
+import com.dahhong.whoami.reply.domain.entity.Reply;
+
 public interface DeleteReplyUseCase {
-	/**
-	 * Reply를 삭제한다? 그런건 없어요~
-	 */
+	public void deleteReply(Long id);
 }

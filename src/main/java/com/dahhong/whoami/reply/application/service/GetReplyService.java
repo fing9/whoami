@@ -1,5 +1,6 @@
 package com.dahhong.whoami.reply.application.service;
 
+import com.dahhong.whoami.global.exception.customException.NotFoundException;
 import com.dahhong.whoami.page.application.port.in.GetPageUseCase;
 import com.dahhong.whoami.reply.application.port.in.GetReplyUseCase;
 import com.dahhong.whoami.reply.application.port.out.ReplyQueryPort;
@@ -24,5 +25,10 @@ public class GetReplyService implements GetReplyUseCase {
 	@Override
 	public List<Reply> getRepliesOfPage(Long pageId) {
 		return replyQueryPort.findByPageIdFetchJoin(pageId);
+	}
+
+	@Override
+	public Reply getReplyById(Long id) {
+		return replyQueryPort.findById(id).orElseThrow(()-> new NotFoundException("해당 답변을 찾을 수 없습니다."));
 	}
 }
