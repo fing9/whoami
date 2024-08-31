@@ -1,5 +1,6 @@
 package com.dahhong.whoami.global.security.authenticationProvider;
 
+import com.dahhong.whoami.global.security.filter.UserAuthentication;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,12 +21,13 @@ public class KakaoAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         UserDetails userDetails = userDetailsService.loadUserByUsername((String) authentication.getPrincipal());
-        return new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword());
+        return new UserAuthentication(userDetails.getUsername(), userDetails.getPassword(), userDetails.getAuthorities());
     }
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return false;
+        return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication)
+                || UserAuthentication.class.isAssignableFrom(authentication);
     }
 
 }

@@ -13,9 +13,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
@@ -79,7 +77,7 @@ public class KakaoJwtAuthenticationFilter extends GenericFilterBean {
         String userId = extractUserId(accessToken);
         if (verification(userId)) {
             try {
-                authenticate = kakaoAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(userId, ""));
+                authenticate = kakaoAuthenticationProvider.authenticate(new UserAuthentication(userId, "", null));
                 SecurityContextHolder.getContext().setAuthentication(authenticate);
             } catch(Exception e) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
